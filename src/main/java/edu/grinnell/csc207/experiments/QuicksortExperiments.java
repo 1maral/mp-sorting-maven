@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.Comparator;
 
 import edu.grinnell.csc207.sorting.MergeSorter;
+import edu.grinnell.csc207.sorting.Quicksorter;
 import edu.grinnell.csc207.sorting.Sorter;
 
 /**
@@ -25,7 +26,7 @@ public class QuicksortExperiments {
   public static void main(String[] args) {
     PrintWriter pen = new PrintWriter(System.out, true);
     Comparator<Comparable> order = (x,y) -> x.compareTo(y);
-    Sorter<Comparable> sorter = new MergeSorter<>(order);
+    Sorter<Comparable> sorter = new Quicksorter<>(order);
     SortExperiments.manyExperiments(pen, sorter);
     SortExperiments.oneExperiment(pen, args, sorter);
     pen.close();

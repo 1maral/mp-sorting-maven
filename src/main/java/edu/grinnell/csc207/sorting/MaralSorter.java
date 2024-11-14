@@ -15,7 +15,7 @@ import edu.grinnell.csc207.main.SortTools;
  * @author Maral Bat-Erdene
  */
 
-public class Quicksorter<T> implements Sorter<T> {
+public class MaralSorter<T> implements Sorter<T> {
   // +--------+------------------------------------------------------
   // | Fields |
   // +--------+
@@ -36,7 +36,7 @@ public class Quicksorter<T> implements Sorter<T> {
    *   The order in which elements in the array should be ordered
    *   after sorting.
    */
-  public Quicksorter(Comparator<? super T> comparator) {
+  public MaralSorter(Comparator<? super T> comparator) {
     this.order = comparator;
   } // Quicksorter(Comparator)
 
@@ -96,6 +96,15 @@ public class Quicksorter<T> implements Sorter<T> {
   private int pickPivot(int min, int max) {
     // create a random pivot to divide the array
     Random rand = new Random();
-    return (rand.nextInt(max - min + 1) + min);
-  } // pickPivot(int, int)
-} // class Quicksorter
+    int pivot1 = rand.nextInt(max - min + 1) + min;
+    int pivot2 = rand.nextInt(max - min + 1) + min;
+    int pivot3 = rand.nextInt(max - min + 1) + min;
+    int mid = (low + high) / 2;
+    if (arr[low] > arr[mid]) {
+        int temp = arr[low];
+        arr[low] = arr[mid];
+        arr[mid] = temp;
+    }
+    return mid; 
+  }
+} // class MaralSorter
