@@ -1,11 +1,9 @@
 package edu.grinnell.csc207.experiments;
 
-import edu.grinnell.csc207.sorting.Sorter;
-
 import java.io.PrintWriter;
-
 import java.util.Arrays;
-import java.util.Comparator;
+
+import edu.grinnell.csc207.sorting.Sorter;
 
 /**
  * Some tools for quick experiments with sorting routines.
@@ -50,6 +48,12 @@ public class SortExperiments {
     // An array of integers that gave same trouble.
     oneExperiment(pen, 
         new Integer[] {28, 37, 20, 55, 10, 17, 9, 17}, 
+        sorter);
+    oneExperiment(pen, 
+        new Integer[] {1, 3, 2, 4, 6, 5}, 
+        sorter);
+    oneExperiment(pen, 
+        new String[] {"a", "e", "b", "f", "c", "d"}, 
         sorter);
   } // sortExperiments(PrintWriter, Sorter<String>)
  

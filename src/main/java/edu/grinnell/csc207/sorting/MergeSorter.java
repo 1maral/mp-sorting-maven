@@ -1,5 +1,6 @@
 package edu.grinnell.csc207.sorting;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 /**
@@ -9,6 +10,7 @@ import java.util.Comparator;
  *   The types of values that are sorted.
  *
  * @author Samuel A. Rebelsky
+ * @author Maral Bat-Erdene
  */
 
 public class MergeSorter<T> implements Sorter<T> {
@@ -55,6 +57,50 @@ public class MergeSorter<T> implements Sorter<T> {
    */
   @Override
   public void sort(T[] values) {
-    // STUB
+    sortDivide(values, values.length);
   } // sort(T[])
+
+  private void sortDivide(T[] values, int length) {
+    // Divide the array recursively until one element
+    if (length > 1) {
+      // find the middle
+      int middle = length/2;
+      // create and store half arrays from the division
+      T[] left = Arrays.copyOfRange(values, 0, middle);
+      T[] right = Arrays.copyOfRange(values, middle, length);
+      sortDivide(left, middle);
+      sortDivide(right, length - middle);
+
+      sortMerge(values, left, right, middle, length - middle);
+    } // if
+  } //sortDivide(T[], int)
+
+  private void sortMerge(T[] values, T[] left, T[] right, int leftlim, int rightlim) {
+    int lPointer = 0;
+    int rPointer = 0;
+    int valPointer = 0;
+
+    while (lPointer < leftlim && rPointer < rightlim) {
+      if (this.order.compare(left[lPointer], right[rPointer]) < 0) {
+        values[valPointer] = left[lPointer];
+        lPointer++;
+      } else {
+        values[valPointer] = right[rPointer];
+        rPointer++;
+      } // if/else
+      valPointer++;
+    } // while
+
+    while(lPointer < leftlim) {
+      values[valPointer] = left[lPointer];
+      lPointer++;
+      valPointer++;
+    } // while
+
+    while(rPointer < rightlim) {
+      values[valPointer] = right[rPointer];
+      rPointer++;
+      valPointer++;
+    } // while
+  } //sortMerge(T[], T[], T[], int, int)
 } // class MergeSorter

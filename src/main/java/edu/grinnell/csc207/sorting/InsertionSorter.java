@@ -2,6 +2,8 @@ package edu.grinnell.csc207.sorting;
 
 import java.util.Comparator;
 
+import edu.grinnell.csc207.main.SortTools;
+
 /**
  * Something that sorts using insertion sort.
  *
@@ -9,6 +11,7 @@ import java.util.Comparator;
  *   The types of values that are sorted.
  *
  * @author Samuel A. Rebelsky
+ * @author Maral Bat-Erdene
  */
 
 public class InsertionSorter<T> implements Sorter<T> {
@@ -55,6 +58,14 @@ public class InsertionSorter<T> implements Sorter<T> {
    */
   @Override
   public void sort(T[] values) {
-    // STUB
+    // loop for the unsorted part
+    for (int i = 1; i < values.length; i++) {
+      // loop for the sorted part and finding the right position
+      for (int j = i; j > 0; j--) {
+        if (this.order.compare(values[j - 1], values[j]) < 0) {
+          SortTools.swap(values, j, j - 1);
+        } // if
+      } // for
+    } // for
   } // sort(T[])
 } // class InsertionSorter
