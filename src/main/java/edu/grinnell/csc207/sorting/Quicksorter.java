@@ -1,6 +1,7 @@
 package edu.grinnell.csc207.sorting;
 
 import java.util.Comparator;
+import java.util.Random;
 
 /**
  * Something that sorts using Quicksort.
@@ -9,6 +10,7 @@ import java.util.Comparator;
  *   The types of values that are sorted.
  *
  * @author Samuel A. Rebelsky
+ * @author Maral Bat-Erdene
  */
 
 public class Quicksorter<T> implements Sorter<T> {
@@ -55,6 +57,12 @@ public class Quicksorter<T> implements Sorter<T> {
    */
   @Override
   public void sort(T[] values) {
-    // STUB
+    // create a random pivot to divide the array
+    Random rand = new Random();
+    int pivot = rand.nextInt(values.length - 1);
   } // sort(T[])
+
+  private void sortDivide(T[] values, int length) {
+    
+  }
 } // class Quicksorter
