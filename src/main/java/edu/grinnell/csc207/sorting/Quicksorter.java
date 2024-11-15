@@ -59,24 +59,54 @@ public class Quicksorter<T> implements Sorter<T> {
    */
   @Override
   public void sort(T[] values) {
+    if (values.length < 1) {
+      return;
+    } // if
     quickSort(values, 0, values.length - 1);
   } // sort(T[])
 
+  /**
+   * Performs the recursive Quicksort algorithm on a segment of the array.
+   *
+   * @param values
+   *   The array to be sorted.
+   * @param lb
+   *   The lower bound (inclusive) of the segment to be sorted.
+   * @param ub
+   *   The upper bound (inclusive) of the segment to be sorted.
+   */
   private void quickSort(T[] values, int lb, int ub) {
+    if (lb >= ub) {
+      return;
+    } // if
     int [] bounds = dnf(values, lb, ub);
-
-    dnf(values, lb, bounds[0]);
-    dnf(values, bounds[1], ub);
+    // recursive calls on the two halves
+    quickSort(values, lb, bounds[0]);
+    quickSort(values, bounds[1], ub);
   } // quickSort(T[], int, int)
 
+  /**
+   * Performs the Dutch National Flag partitioning algorithm to partition
+   * the array segment around a pivot value.
+   *
+   * @param values
+   *   The array being partitioned.
+   * @param lb
+   *   The lower bound (inclusive) of the segment to partition.
+   * @param ub
+   *   The upper bound (inclusive) of the segment to partition.
+   * @return
+   *   An array of two integers: the index of the last element in the
+   *   lower partition and the index of the first element in the upper
+   *   partition.
+   */
   private int[] dnf(T[] values, int lb, int ub) {
     int pivot = pickPivot(lb, ub);
     T pivotVal = values[pivot];
     int lowerP = lb;
     int equalP = lb;
     int higherP = ub;
-
-    while (lowerP < higherP) {
+    while (equalP <= higherP) {
       if (order.compare(values[equalP], pivotVal) < 0) {
         SortTools.swap(values, equalP, lowerP);
         lowerP++;
@@ -89,10 +119,23 @@ public class Quicksorter<T> implements Sorter<T> {
         higherP--;
       } // if/else
     } // while
-
+    if (lb > ub) {
+      System.err.println("Lower bound must be larger than upper bound");
+    } // if
     return new int[] {lowerP, equalP};
-  }
+  } // dnf(T[], int, int)
 
+  /**
+   * Selects a pivot for the Quicksort algorithm using a
+   * random value within the specified range.
+   *
+   * @param min
+   *   The minimum index in the range.
+   * @param max
+   *   The maximum index in the range.
+   * @return
+   *   The index of the chosen pivot.
+   */
   private int pickPivot(int min, int max) {
     // create a random pivot to divide the array
     Random rand = new Random();

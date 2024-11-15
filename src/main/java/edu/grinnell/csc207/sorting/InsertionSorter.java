@@ -62,7 +62,7 @@ public class InsertionSorter<T> implements Sorter<T> {
     for (int i = 1; i < values.length; i++) {
       // loop for the sorted part and finding the right position
       for (int j = i; j > 0; j--) {
-        if (this.order.compare(values[j - 1], values[j]) < 0) {
+        if (this.order.compare(values[j - 1], values[j]) > 0) {
           SortTools.swap(values, j, j - 1);
         } // if
       } // for

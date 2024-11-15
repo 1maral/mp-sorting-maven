@@ -62,7 +62,7 @@ public class SelectionSorter<T> implements Sorter<T> {
     for (int i = 0; i < values.length - 1; i++) {
       currentSmall = i;
       for (int j = i; j < values.length; j++) {
-        if (this.order.compare(values[currentSmall], values[j]) < 0) {
+        if (this.order.compare(values[currentSmall], values[j]) > 0) {
           currentSmall = j;
         } // if
       } // for

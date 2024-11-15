@@ -183,7 +183,7 @@ public class TestSorter {
       return;
     } // if
     String[] original = {"maral1", "maral2", "maral bat", "maral bate", "1maral", "2maral"};
-    String[] expected = {"1maral", "2maral", "maral1", "maral2", "maral bat", "maral bate"};
+    String[] expected = {"1maral", "2maral", "maral bat", "maral bate", "maral1", "maral2"};
     assertSorts(expected, original, stringSorter);
   } // emptyArrTest
 } // class TestSorter

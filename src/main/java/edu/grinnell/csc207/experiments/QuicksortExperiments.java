@@ -3,7 +3,6 @@ package edu.grinnell.csc207.experiments;
 import java.io.PrintWriter;
 import java.util.Comparator;
 
-import edu.grinnell.csc207.sorting.MergeSorter;
 import edu.grinnell.csc207.sorting.Quicksorter;
 import edu.grinnell.csc207.sorting.Sorter;
 

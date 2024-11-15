@@ -1,12 +1,16 @@
 package edu.grinnell.csc207.sorting;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 import java.util.Comparator;
 import java.util.Random;
 
 import edu.grinnell.csc207.main.SortTools;
 
 /**
- * Something that sorts using Quicksort.
+ * This class sorts an array of elements using Quicksort with a comparator to
+ * define the order of elements. For arrays with fewer than 15 elements, it 
+ * switches to an insertion sort for better performance on smaller arrays.
  *
  * @param <T>
  *   The types of values that are sorted.
@@ -15,7 +19,7 @@ import edu.grinnell.csc207.main.SortTools;
  * @author Maral Bat-Erdene
  */
 
-public class MaralSorter<T> implements Sorter<T> {
+public class MaralBatErdeneSort<T> implements Sorter<T> {
   // +--------+------------------------------------------------------
   // | Fields |
   // +--------+
@@ -36,7 +40,7 @@ public class MaralSorter<T> implements Sorter<T> {
    *   The order in which elements in the array should be ordered
    *   after sorting.
    */
-  public MaralSorter(Comparator<? super T> comparator) {
+  public MaralBatErdeneSort(Comparator<? super T> comparator) {
     this.order = comparator;
   } // Quicksorter(Comparator)
 
@@ -59,16 +63,52 @@ public class MaralSorter<T> implements Sorter<T> {
    */
   @Override
   public void sort(T[] values) {
+    if (values.length < 1) {
+      return;
+    } // if
+    if (values.length < 15) {
+      Sorter<T> sorter = new InsertionSorter<>(this.order);
+      sorter.sort(values);
+      return;
+    } // if
     quickSort(values, 0, values.length - 1);
   } // sort(T[])
 
+  /**
+   * Performs the recursive Quicksort algorithm on a segment of the array.
+   *
+   * @param values
+   *   The array to be sorted.
+   * @param lb
+   *   The lower bound (inclusive) of the segment to be sorted.
+   * @param ub
+   *   The upper bound (inclusive) of the segment to be sorted.
+   */
   private void quickSort(T[] values, int lb, int ub) {
+    if (lb >= ub) {
+      return;
+    } // if
     int [] bounds = dnf(values, lb, ub);
-
-    dnf(values, lb, bounds[0]);
-    dnf(values, bounds[1], ub);
+    // recursive calls on the two halves
+    quickSort(values, lb, bounds[0]);
+    quickSort(values, bounds[1], ub);
   } // quickSort(T[], int, int)
 
+  /**
+   * Performs the Dutch National Flag partitioning algorithm to partition
+   * the array segment around a pivot value.
+   *
+   * @param values
+   *   The array being partitioned.
+   * @param lb
+   *   The lower bound (inclusive) of the segment to partition.
+   * @param ub
+   *   The upper bound (inclusive) of the segment to partition.
+   * @return
+   *   An array of two integers: the index of the last element in the
+   *   lower partition and the index of the first element in the upper
+   *   partition.
+   */
   private int[] dnf(T[] values, int lb, int ub) {
     int pivot = pickPivot(lb, ub);
     T pivotVal = values[pivot];
@@ -76,7 +116,7 @@ public class MaralSorter<T> implements Sorter<T> {
     int equalP = lb;
     int higherP = ub;
 
-    while (lowerP < higherP) {
+    while (equalP <= higherP) {
       if (order.compare(values[equalP], pivotVal) < 0) {
         SortTools.swap(values, equalP, lowerP);
         lowerP++;
@@ -89,22 +129,30 @@ public class MaralSorter<T> implements Sorter<T> {
         higherP--;
       } // if/else
     } // while
-
+    if (lb > ub) {
+      System.err.println("Lower bound must be larger than upper bound");
+    } // if
     return new int[] {lowerP, equalP};
-  }
+  } // dnf(T[], int, int)
 
+  /**
+   * Selects a pivot for the Quicksort algorithm using the median of three
+   * random values within the specified range.
+   *
+   * @param min
+   *   The minimum index in the range.
+   * @param max
+   *   The maximum index in the range.
+   * @return
+   *   The index of the chosen pivot.
+   */
   private int pickPivot(int min, int max) {
     // create a random pivot to divide the array
     Random rand = new Random();
     int pivot1 = rand.nextInt(max - min + 1) + min;
     int pivot2 = rand.nextInt(max - min + 1) + min;
     int pivot3 = rand.nextInt(max - min + 1) + min;
-    int mid = (low + high) / 2;
-    if (arr[low] > arr[mid]) {
-        int temp = arr[low];
-        arr[low] = arr[mid];
-        arr[mid] = temp;
-    }
-    return mid; 
-  }
-} // class MaralSorter
+    int median = max(min(pivot1, pivot2), min(max(pivot1, pivot2), pivot3));
+    return median; 
+  } // pickPivot(int, int)
+} // class MaralBatErdeneSort

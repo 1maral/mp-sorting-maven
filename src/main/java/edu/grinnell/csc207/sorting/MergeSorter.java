@@ -60,6 +60,15 @@ public class MergeSorter<T> implements Sorter<T> {
     sortDivide(values, values.length);
   } // sort(T[])
 
+  /**
+   * Recursively divides the array into halves until each subarray contains
+   * a single element, then merges the subarrays in sorted order.
+   *
+   * @param values
+   *   The array to be divided and eventually sorted.
+   * @param length
+   *   The length of the current array segment.
+   */
   private void sortDivide(T[] values, int length) {
     // Divide the array recursively until one element
     if (length > 1) {
@@ -75,6 +84,23 @@ public class MergeSorter<T> implements Sorter<T> {
     } // if
   } //sortDivide(T[], int)
 
+  /**
+   * Merges two sorted subarrays (left and right) into a single sorted array.
+   *
+   * @param values
+   *   The array to store the merged result.
+   * @param left
+   *   The left half of the divided array, which is sorted.
+   * @param right
+   *   The right half of the divided array, which is sorted.
+   * @param leftlim
+   *   The number of elements in the left array.
+   * @param rightlim
+   *   The number of elements in the right array.
+   *
+   * This method compares elements from the left and right subarrays and merges
+   * them into the main array in sorted order.
+   */
   private void sortMerge(T[] values, T[] left, T[] right, int leftlim, int rightlim) {
     int lPointer = 0;
     int rPointer = 0;
